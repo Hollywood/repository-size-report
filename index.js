@@ -11,6 +11,7 @@ const github = require('@octokit/rest')({
 })
 require('./pagination')(github)
 
+//Create a local .env file with a single var named 'ghToken' containing a PAT of a user with access to all repos you want information on.
 github.authenticate({
     type: 'token',
     token: process.env.ghToken
