@@ -6,12 +6,12 @@ const github = require('@octokit/rest')({
     headers: {
         accept: 'application/vnd.github.hellcat-preview+json'
     },
-    //Set this to GHE url
+    //Set this to GHE API url if on GitHub Enterprise
     baseUrl: 'https://api.github.com'
 })
 require('./pagination')(github)
 
-//Create a local .env file with a single var named 'ghToken' containing a PAT of a user with access to all repos you want information on.
+//Add a PAT to the .env file to authenticate against the instance.
 github.authenticate({
     type: 'token',
     token: process.env.ghToken
