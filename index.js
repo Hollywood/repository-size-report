@@ -22,25 +22,24 @@ async function getRepoData() {
 
     //Get List of Repos and their sizes
     const repoResponse = [].concat.apply([], 
-        (await github.paginate(github.repos.getAll())).map(n => n.data.map((n) => [n.name , n.size + ' kb'])))
+        (await github.paginate(github.repos.getAll())).map(n => n.data.map((n) => [n.html_url])))
     
     for(const repo of repoResponse){
     table.push({
-        repo: repo[0],
-        size: repo[1]
+        html_url: repo[0]
         })
     }
         
     //Write to CSV file
     var jsonResults = JSON.stringify(table)
-    const fields = ['repo', 'size']
+    const fields = ['html_url']
     var json2csvParser = new Json2csvParser({
       fields,
       delimiter: ';'
     })
     const csv = json2csvParser.parse(table)
     console.log(csv)
-    fs.writeFile('repo-sizes.csv', csv, function (err) {
+    fs.writeFile('repo-addresses.csv', csv, function (err) {
       if (err) throw err
       console.log('file saved!')
     })
